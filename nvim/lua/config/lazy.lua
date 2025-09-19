@@ -8,11 +8,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- import any extras modules here
+
+    -- import extras modules
     { import = "lazyvim.plugins.extras.linting.eslint" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },
     { import = "lazyvim.plugins.extras.ai.copilot" },
@@ -24,27 +24,41 @@ require("lazy").setup({
     -- import/override with your plugins
     { import = "plugins" },
 
+    -- Surround plugin
     {
       "kylechui/nvim-surround",
-      version = "*", -- Use for stability; omit to use `main` branch for the latest features
+      version = "*",
       event = "VeryLazy",
       config = function()
-        require("nvim-surround").setup({
-          -- Configuration here, or leave empty to use defaults
-        })
+        require("nvim-surround").setup({})
       end,
     },
 
+    -- Git blame
+    {
+      "f-person/git-blame.nvim",
+      event = "VeryLazy",
+      opts = {
+        enabled = true,
+        message_template = " <summary> • <date> • <author> • <<sha>>",
+        date_format = "%m-%d-%Y %H:%M:%S",
+        virtual_text_column = 1,
+      },
+    },
+
+    -- FZF Lua (better than default telescope for some use cases)
     {
       "ibhagwan/fzf-lua",
-      -- optional for icon support
       dependencies = { "nvim-tree/nvim-web-devicons" },
-      -- or if using mini.icons/mini.nvim
-      -- dependencies = { "nvim-mini/mini.icons" },
+      keys = {
+        { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find Files (FZF)" },
+        { "<leader>fg", "<cmd>FzfLua live_grep<cr>", desc = "Live Grep (FZF)" },
+        { "<leader>fb", "<cmd>FzfLua buffers<cr>", desc = "Find Buffers (FZF)" },
+      },
       opts = {},
     },
 
-    -- lazy git
+    -- LazyGit
     {
       "kdheepak/lazygit.nvim",
       cmd = {
@@ -54,25 +68,20 @@ require("lazy").setup({
         "LazyGitFilter",
         "LazyGitFilterCurrentFile",
       },
-      -- optional for floating window border decoration
       dependencies = {
         "nvim-lua/plenary.nvim",
       },
-      -- setting the keybinding for LazyGit with 'keys' is recommended in
-      -- order to load the plugin when the command is run for the first time
       keys = {
-        { "<leader>lg", "<cmd>LazyGit<cr>", desc = "Open lazy git" },
+        { "<leader>lg", "<cmd>LazyGit<cr>", desc = "Open LazyGit" },
       },
     },
+
+    -- Snacks (modern LazyVim utility collection)
     {
       "folke/snacks.nvim",
       priority = 1000,
       lazy = false,
-      ---@type snacks.Config
       opts = {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
         bigfile = { enabled = true },
         dashboard = { enabled = true },
         indent = { enabled = true },
@@ -85,48 +94,72 @@ require("lazy").setup({
       },
     },
 
-    -- add okuuva/auto-save.nvim plugin
+    -- Auto-save
     {
       "okuuva/auto-save.nvim",
-      cmd = "ASToggle", -- optional for lazy loading on command
-      event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
+      cmd = "ASToggle",
+      event = { "InsertLeave", "TextChanged" },
       opts = {
         enabled = true,
         delay = 3000,
-        -- your config goes here
-        -- or just leave it empty :)
+        execution_message = {
+          enabled = false, -- disable save notifications
+        },
       },
     },
 
-    -- ZenMode
+    -- Zen Mode
     {
       "folke/zen-mode.nvim",
+      cmd = "ZenMode",
+      keys = {
+        { "<leader>zz", "<cmd>ZenMode<cr>", desc = "Toggle Zen Mode" },
+      },
       opts = {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
+        window = {
+          backdrop = 0.95,
+          width = 120,
+          height = 1,
+          options = {
+            signcolumn = "no",
+            number = false,
+            relativenumber = false,
+            cursorline = false,
+            cursorcolumn = false,
+            foldcolumn = "0",
+            list = false,
+            wrap = false,
+            linebreak = true,
+          },
+        },
+        plugins = {
+          options = {
+            enabled = true,
+            ruler = false,
+            showcmd = false,
+          },
+          twilight = { enabled = false },
+          gitsigns = { enabled = false },
+          tmux = { enabled = true },
+        },
       },
     },
   },
 
   defaults = {
-    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
-    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
     lazy = false,
-    -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
-    -- have outdated releases, which may break your Neovim install.
-    version = false, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver
+    version = false,
   },
-  checker = { enabled = true }, -- automatically check for plugin updates
+
+  checker = {
+    enabled = true,
+    frequency = 3600, -- check every hour instead of constantly
+  },
+
   performance = {
     rtp = {
-      -- disable some rtp plugins
       disabled_plugins = {
         "gzip",
-        -- "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
         "tarPlugin",
         "tohtml",
         "tutor",
