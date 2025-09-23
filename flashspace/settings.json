@@ -1,0 +1,76 @@
+{
+  "activeWorkspaceOnFocusChange" : true,
+  "alternativeDisplays" : "",
+  "centerCursorOnFocusChange" : true,
+  "centerCursorOnWorkspaceChange" : true,
+  "changeWorkspaceOnAppAssign" : true,
+  "checkForUpdatesAutomatically" : true,
+  "displayMode" : "static",
+  "enableFocusManagement" : true,
+  "enableIntegrations" : false,
+  "enablePictureInPictureSupport" : true,
+  "enableSpaceControl" : true,
+  "enableSpaceControlAnimations" : false,
+  "enableSpaceControlTilesAnimations" : false,
+  "enableSwipeGestures" : false,
+  "enableWorkspaceTransitions" : false,
+  "floatingApps" : [
+    {
+      "bundleIdentifier" : "com.apple.ActivityMonitor",
+      "name" : "Activity Monitor"
+    },
+    {
+      "bundleIdentifier" : "com.apple.calculator",
+      "name" : "Calculator"
+    },
+    {
+      "bundleIdentifier" : "pl.wojciechkulik.FlashSpace",
+      "iconPath" : "/Applications/FlashSpace.app/Contents/Resources/AppIcon.icns",
+      "name" : "FlashSpace"
+    },
+    {
+      "bundleIdentifier" : "",
+      "name" : "qemu-system-i386"
+    }
+  ],
+  "focusDown" : "opt+j",
+  "focusFrontmostWindow" : false,
+  "focusLeft" : "opt+h",
+  "focusRight" : "opt+l",
+  "focusUp" : "opt+k",
+  "keepUnassignedAppsOnSwitch" : false,
+  "loopWorkspaces" : true,
+  "menuBarDisplayAliases" : "",
+  "menuBarTitleTemplate" : "$WORKSPACE",
+  "pipApps" : [
+
+  ],
+  "pipScreenCornerOffset" : 15,
+  "restartAppOnWakeUp" : false,
+  "restoreHiddenAppsOnSwitch" : true,
+  "runScriptOnLaunch" : "",
+  "runScriptOnProfileChange" : "",
+  "runScriptOnWorkspaceChange" : "",
+  "showFloatingNotifications" : true,
+  "showMenuBarIcon" : true,
+  "showMenuBarTitle" : true,
+  "showSpaceControl" : "opt+tab",
+  "skipEmptyWorkspacesOnSwitch" : false,
+  "spaceControlCurrentDisplayWorkspaces" : false,
+  "spaceControlHideEmptyWorkspaces" : false,
+  "spaceControlNumberOfColumns" : 0,
+  "spaceControlUpdateScreenshotsOnOpen" : false,
+  "swipeDown3FingerAction" : "none",
+  "swipeDown4FingerAction" : "none",
+  "swipeLeft3FingerAction" : "none",
+  "swipeLeft4FingerAction" : "none",
+  "swipeRight3FingerAction" : "none",
+  "swipeRight4FingerAction" : "none",
+  "swipeThreshold" : 0.2,
+  "swipeUp3FingerAction" : "none",
+  "swipeUp4FingerAction" : "none",
+  "switchWorkspaceWhenPipCloses" : true,
+  "toggleTheFocusedAppFloating" : "opt+shift+;",
+  "workspaceTransitionDimming" : 0.1,
+  "workspaceTransitionDuration" : 0.2
+}
