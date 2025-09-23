@@ -1,105 +1,162 @@
--- keymaps are automatically loaded on the verylazy event
--- default keymaps that are always set: https://github.com/lazyvim/lazyvim/blob/main/lua/lazyvim/config/keymaps.lua
--- add any additional keymaps here
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps: https://github.com/lazyvim/lazyvim/blob/main/lua/lazyvim/config/keymaps.lua
 
+-- Load discipline plugin
 local discipline = require("shaggy.discipline")
-
 discipline.cowboy()
 
-local keymap = vim.keymap
+-- Set up keymap helper
+local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
+-- ========================================
+-- ARROW KEYS DISCIPLINE
+-- ========================================
+-- Disable arrow keys in normal and insert mode to encourage hjkl usage
+local arrow_keys = { "<Up>", "<Down>", "<Left>", "<Right>" }
+for _, key in ipairs(arrow_keys) do
+  keymap("n", key, "<nop>", opts)
+  keymap("i", key, "<nop>", opts)
+end
 
---disable arrow keys in normal
-vim.api.nvim_set_keymap("n", "<up>", "<nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<down>", "<nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<left>", "<nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<right>", "<nop>", { noremap = true, silent = true })
+-- ========================================
+-- INSERT MODE IMPROVEMENTS
+-- ========================================
+-- Quick escape from insert mode
+keymap("i", "jj", "<Esc>", opts)
+keymap("i", "jk", "<Esc>", opts) -- Alternative escape
 
---disable arrow keys in insert
-vim.api.nvim_set_keymap("i", "<up>", "<nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<down>", "<nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<left>", "<nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<right>", "<nop>", { noremap = true, silent = true })
+-- ========================================
+-- REGISTER-FRIENDLY OPERATIONS
+-- ========================================
+-- Operations that don't affect default register
+keymap("n", "x", '"_x', { desc = "Delete character without yanking" })
 
---jj to exit insert mode
-vim.api.nvim_set_keymap("i", "jj", "<esc>", { noremap = true, silent = true })
+-- Paste from yank register (register 0)
+keymap({ "n", "v" }, "<leader>p", '"0p', { desc = "Paste from yank register" })
 
--- do things without affecting the registers
-keymap.set("n", "x", '"_x')
-keymap.set("n", "<leader>p", '"0p')
-keymap.set("n", "<leader>p", '"0p')
-keymap.set("v", "<leader>p", '"0p')
-keymap.set("n", "<leader>c", '"_c')
-keymap.set("n", "<leader>c", '"_c')
-keymap.set("v", "<leader>c", '"_c')
-keymap.set("v", "<leader>c", '"_c')
-keymap.set("n", "<leader>d", '"_d')
-keymap.set("n", "<leader>d", '"_d')
-keymap.set("v", "<leader>d", '"_d')
-keymap.set("v", "<leader>d", '"_d')
+-- Delete/change/cut without affecting default register
+keymap({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
+keymap({ "n", "v" }, "<leader>c", '"_c', { desc = "Change without yanking" })
+keymap({ "n", "v" }, "<leader>x", '"_x', { desc = "Cut without yanking" })
 
--- increment/decrement
-keymap.set("n", "+", "<c-a>")
-keymap.set("n", "-", "<c-x>")
+-- ========================================
+-- EDITING ENHANCEMENTS
+-- ========================================
+-- Increment/decrement numbers
+keymap("n", "+", "<C-a>", { desc = "Increment number" })
+keymap("n", "-", "<C-x>", { desc = "Decrement number" })
 
--- delete a word backwards
-keymap.set("n", "dw", 'vb"_d')
+-- Better word deletion
+keymap("n", "dw", 'vb"_d', { desc = "Delete word backwards without yanking" })
 
--- select all
-keymap.set("n", "<c-a>", "gg<s-v>g")
+-- Select all
+keymap("n", "<C-a>", "gg<S-v>G", { desc = "Select all text" })
 
--- save with root permission (not working for now)
---vim.api.nvim_create_user_command('w', 'w !sudo tee > /dev/null %', {})
+-- Insert blank lines without entering insert mode
+keymap("n", "<leader>o", "o<Esc>", { desc = "Insert line below" })
+keymap("n", "<leader>O", "O<Esc>", { desc = "Insert line above" })
 
--- disable continuations
-keymap.set("n", "<leader>o", "o<esc>^da", opts)
-keymap.set("n", "<leader>o", "o<esc>^da", opts)
+-- ========================================
+-- NAVIGATION
+-- ========================================
+-- Better jumplist navigation
+keymap("n", "<C-m>", "<C-i>", opts)
 
--- jumplist
-keymap.set("n", "<c-m>", "<c-i>", opts)
+-- ========================================
+-- TAB MANAGEMENT
+-- ========================================
+-- Tab operations
+keymap("n", "te", ":tabnew<CR>", { desc = "New tab" })
+keymap("n", "tc", ":tabclose<CR>", { desc = "Close tab" })
+keymap("n", "<Tab>", ":tabnext<CR>", { desc = "Next tab" })
+keymap("n", "<S-Tab>", ":tabprev<CR>", { desc = "Previous tab" })
 
--- new tab
-keymap.set("n", "te", ":tabedit")
-keymap.set("n", "<tab>", ":tabnext<return>", opts)
-keymap.set("n", "<s-tab>", ":tabprev<return>", opts)
-keymap.set("n", "tc", ":tabclose<CR>", { noremap = true, silent = true })
+-- Move tabs
+keymap("n", "<leader>tm", ":tabmove<CR>", { desc = "Move tab" })
 
-keymap.set("n", "<leader>cQ", function()
-  require("CopilotChat").open() -- open chat
+-- ========================================
+-- WINDOW MANAGEMENT
+-- ========================================
+-- Split windows
+keymap("n", "ss", "<C-w>s", { desc = "Horizontal split" })
+keymap("n", "sv", "<C-w>v", { desc = "Vertical split" })
+
+-- Navigate windows
+keymap("n", "sh", "<C-w>h", { desc = "Move to left window" })
+keymap("n", "sj", "<C-w>j", { desc = "Move to bottom window" })
+keymap("n", "sk", "<C-w>k", { desc = "Move to top window" })
+keymap("n", "sl", "<C-w>l", { desc = "Move to right window" })
+
+-- Resize windows
+keymap("n", "<C-w><Left>", "<C-w><", { desc = "Decrease window width" })
+keymap("n", "<C-w><Right>", "<C-w>>", { desc = "Increase window width" })
+keymap("n", "<C-w><Up>", "<C-w>+", { desc = "Increase window height" })
+keymap("n", "<C-w><Down>", "<C-w>-", { desc = "Decrease window height" })
+
+-- Alternative resize with arrow keys for consistency
+keymap("n", "<C-Left>", "<C-w><", { desc = "Decrease window width" })
+keymap("n", "<C-Right>", "<C-w>>", { desc = "Increase window width" })
+keymap("n", "<C-Up>", "<C-w>+", { desc = "Increase window height" })
+keymap("n", "<C-Down>", "<C-w>-", { desc = "Decrease window height" })
+
+-- Close window
+keymap("n", "sq", "<C-w>q", { desc = "Close window" })
+
+-- ========================================
+-- PLUGIN-SPECIFIC KEYMAPS
+-- ========================================
+-- Copilot Chat
+keymap("n", "<leader>cQ", function()
+  require("CopilotChat").open()
 end, { desc = "Open Copilot Chat" })
 
-keymap.set("n", "<leader>cq", function()
-  require("CopilotChat").close() -- close chat
+keymap("n", "<leader>cq", function()
+  require("CopilotChat").close()
 end, { desc = "Close Copilot Chat" })
 
--- split window
--- open horizontal split
-vim.keymap.set("n", "ss", "<C-w>s", { noremap = true, silent = true })
+-- Zen mode
+keymap("n", "<leader>z", ":ZenMode<CR>", { desc = "Toggle Zen Mode" })
 
--- open vertical split
-vim.keymap.set("n", "sv", "<C-w>v", { noremap = true, silent = true })
-
--- open new tab
-vim.keymap.set("n", "te", ":tabnew<CR>", { noremap = true, silent = true })
-
-
--- move window
-keymap.set("n", "sh", "<c-w>h")
-keymap.set("n", "sk", "<c-w>k")
-keymap.set("n", "sj", "<c-w>j")
-keymap.set("n", "sl", "<c-w>l")
-
--- resize window
-keymap.set("n", "<c-w><left>", "<c-w><")
-keymap.set("n", "<c-w><right>", "<c-w>>")
-keymap.set("n", "<c-w><up>", "<c-w>+")
-keymap.set("n", "<c-w><down>", "<c-w>-")
-
--- key binding to toggle zen mode
-vim.api.nvim_set_keymap("n", "<leader>z", ":zenmode<cr>", { noremap = true, silent = true })
-
--- diagnostics
-keymap.set("n", "<c-j>", function()
+-- ========================================
+-- DIAGNOSTICS & LSP
+-- ========================================
+-- Diagnostic navigation
+keymap("n", "<C-j>", function()
   vim.diagnostic.goto_next()
-end, opts)
+end, { desc = "Next diagnostic" })
+
+keymap("n", "<C-k>", function()
+  vim.diagnostic.goto_prev()
+end, { desc = "Previous diagnostic" })
+
+-- Show diagnostic information
+keymap("n", "<leader>dd", function()
+  vim.diagnostic.open_float()
+end, { desc = "Show diagnostic" })
+
+-- ========================================
+-- UTILITY KEYMAPS
+-- ========================================
+-- Clear search highlighting
+keymap("n", "<leader>/", ":nohlsearch<CR>", { desc = "Clear search highlighting" })
+
+-- Better indenting (keeps selection)
+keymap("v", "<", "<gv", { desc = "Indent left and reselect" })
+keymap("v", ">", ">gv", { desc = "Indent right and reselect" })
+
+-- Move lines up/down
+keymap("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+keymap("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+
+-- Keep cursor centered when jumping
+keymap("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
+keymap("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
+keymap("n", "n", "nzzzv", { desc = "Next search result (centered)" })
+keymap("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
+
+-- ========================================
+-- DISABLED/COMMENTED FEATURES
+-- ========================================
+-- Save with root permission (commented out as noted)
+-- vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})

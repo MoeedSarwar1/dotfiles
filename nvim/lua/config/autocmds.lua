@@ -1,14 +1,34 @@
--- Turn off paste mode when leaving insert
+-- Create augroup for better organization and to avoid duplicate autocommands
+local augroup = vim.api.nvim_create_augroup("UserAutoCommands", { clear = true })
+
+-- Turn off paste mode when leaving insert mode
 vim.api.nvim_create_autocmd("InsertLeave", {
+  group = augroup,
   pattern = "*",
-  command = "set nopaste",
+  callback = function()
+    if vim.o.paste then
+      vim.o.paste = false
+    end
+  end,
+  desc = "Disable paste mode when leaving insert mode",
 })
 
--- Disable the concealing in some file formats
--- The default conceallevel is 3 in LazyVim
+-- Disable concealing in specific file formats for better readability
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "json", "jsonc", "markdown" },
+  group = augroup,
+  pattern = { "json", "jsonc", "markdown", "help", "tex" },
   callback = function()
-    vim.opt.conceallevel = 0
+    vim.opt_local.conceallevel = 0
   end,
+  desc = "Disable concealing for better readability in certain filetypes",
+})
+
+-- Optional: Also disable conceal cursor to prevent flickering
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup,
+  pattern = { "json", "jsonc", "markdown", "help", "tex" },
+  callback = function()
+    vim.opt_local.concealcursor = ""
+  end,
+  desc = "Disable conceal cursor behavior in certain filetypes",
 })
