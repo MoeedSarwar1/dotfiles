@@ -196,33 +196,55 @@ require("lazy").setup({
     trigger_events = { "InsertLeave", "TextChanged" },
     write_all_buffers = false, -- Save only current buffer
     debounce_delay = 1000,     -- 1 second debounce
-
     -- Save conditions
     condition = function(buf)
       local fn = vim.fn
       local utils = require("auto-save.utils.data")
+      
+      -- Get buffer filetype
+      local filetype = fn.getbufvar(buf, "&filetype")
+      
       -- Don't save special buffer types
-      if utils.not_in(fn.getbufvar(buf, "&filetype"), { "oil", "alpha" }) then
-        return true
+      if utils.not_in(filetype, { "oil", "alpha", "neo-tree", "nvim-tree", "dashboard", "startify" }) then
+        -- Also check if buffer has a valid filename
+        local bufname = vim.api.nvim_buf_get_name(buf)
+        if bufname and bufname ~= "" and not bufname:match("^%w+://") then
+          return true
+        end
       end
       return false
     end,
-
     -- Callbacks for custom actions
     callbacks = {
       before_saving = function(buf)
-        -- Organize imports for TypeScript/JavaScript
-        local params = {
-          command = "_typescript.organizeImports",
-          arguments = { vim.api.nvim_buf_get_name(buf) },
-          title = ""
-        }
-        local clients = vim.lsp.get_active_clients({buf = buf})
-        for _, client in ipairs(clients) do
-          if client.name == "tsserver" then
-            client.request_sync("workspace/executeCommand", params, nil, buf)
+        -- Only organize imports for TypeScript/JavaScript files
+        local filetype = vim.bo[buf].filetype
+        if vim.tbl_contains({ "typescript", "javascript", "typescriptreact", "javascriptreact" }, filetype) then
+          -- Organize imports for TypeScript/JavaScript
+          local params = {
+            command = "_typescript.organizeImports",
+            arguments = { vim.api.nvim_buf_get_name(buf) },
+            title = "Organize Imports"
+          }
+          
+          -- Find tsserver client
+          local clients = vim.lsp.get_clients({ bufnr = buf })
+          for _, client in ipairs(clients) do
+            if client.name == "tsserver" or client.name == "typescript-language-server" then
+              -- Use async request to avoid blocking
+              client.request("workspace/executeCommand", params, function(err, result)
+                if err then
+                  vim.notify("Failed to organize imports: " .. tostring(err), vim.log.levels.WARN)
+                end
+              end, buf)
+              break
+            end
           end
         end
+      end,
+      after_saving = function(buf)
+        -- Optional: Show a message after saving
+        -- vim.notify("Buffer saved: " .. vim.api.nvim_buf_get_name(buf), vim.log.levels.INFO)
       end,
     },
   },

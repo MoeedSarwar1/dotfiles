@@ -31,6 +31,11 @@
               "bundleIdentifier" : "net.kovidgoyal.kitty",
               "iconPath" : "/Applications/kitty.app/Contents/Resources/kitty.icns",
               "name" : "kitty"
+            },
+            {
+              "bundleIdentifier" : "com.apple.iphonesimulator",
+              "iconPath" : "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/Resources/AppIcon.icns",
+              "name" : "Simulator"
             }
           ],
           "assignAppShortcut" : "ctrl+shift+t",
@@ -43,10 +48,7 @@
         },
         {
           "apps" : [
-            {
-              "bundleIdentifier" : "",
-              "name" : "qemu-system-i386"
-            }
+
           ],
           "assignAppShortcut" : "opt+shift+e",
           "display" : "Built-in Retina Display",
@@ -110,11 +112,6 @@
               "bundleIdentifier" : "com.apple.dt.Xcode",
               "iconPath" : "/Applications/Xcode.app/Contents/Resources/Xcode.icns",
               "name" : "Xcode"
-            },
-            {
-              "bundleIdentifier" : "com.apple.iphonesimulator",
-              "iconPath" : "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/Resources/AppIcon.icns",
-              "name" : "Simulator"
             }
           ],
           "assignAppShortcut" : "opt+shift+x",
@@ -135,6 +132,22 @@
           "openAppsOnActivation" : true,
           "shortcut" : "opt+a",
           "symbolIconName" : "rectangle.slash"
+        },
+        {
+          "apps" : [
+            {
+              "bundleIdentifier" : "net.whatsapp.WhatsApp",
+              "iconPath" : "/Applications/WhatsApp.app/Contents/Resources/AppIconCatalystRelease.icns",
+              "name" : "‎WhatsApp"
+            }
+          ],
+          "assignAppShortcut" : "opt+shift+w",
+          "display" : "Built-in Retina Display",
+          "id" : "6BD3B451-4687-4DBD-B0C2-0454535C84C0",
+          "name" : "Whatsapp",
+          "openAppsOnActivation" : true,
+          "shortcut" : "opt+w",
+          "symbolIconName" : "message.fill"
         }
       ]
     }
