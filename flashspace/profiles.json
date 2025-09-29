@@ -31,11 +31,6 @@
               "bundleIdentifier" : "net.kovidgoyal.kitty",
               "iconPath" : "/Applications/kitty.app/Contents/Resources/kitty.icns",
               "name" : "kitty"
-            },
-            {
-              "bundleIdentifier" : "com.apple.iphonesimulator",
-              "iconPath" : "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/Resources/AppIcon.icns",
-              "name" : "Simulator"
             }
           ],
           "assignAppShortcut" : "ctrl+shift+t",
@@ -48,7 +43,11 @@
         },
         {
           "apps" : [
-
+            {
+              "bundleIdentifier" : "com.apple.iphonesimulator",
+              "iconPath" : "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/Resources/AppIcon.icns",
+              "name" : "Simulator"
+            }
           ],
           "assignAppShortcut" : "opt+shift+e",
           "display" : "Built-in Retina Display",
@@ -148,6 +147,26 @@
           "openAppsOnActivation" : true,
           "shortcut" : "opt+w",
           "symbolIconName" : "message.fill"
+        },
+        {
+          "apps" : [
+            {
+              "bundleIdentifier" : "com.figma.Desktop.dua",
+              "iconPath" : "/Applications/Figma.app/Contents/Resources/icon.icns",
+              "name" : "DynamicUniversalApp"
+            },
+            {
+              "bundleIdentifier" : "com.figma.Desktop",
+              "iconPath" : "/Applications/Figma.app/Contents/Resources/icon.icns",
+              "name" : "Figma"
+            }
+          ],
+          "assignAppShortcut" : "opt+shift+f",
+          "display" : "Built-in Retina Display",
+          "id" : "47BE46A3-D5B0-4195-B6AD-2EE783E7DBEF",
+          "name" : "Figma",
+          "openAppsOnActivation" : false,
+          "shortcut" : "opt+f"
         }
       ]
     }

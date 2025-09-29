@@ -188,70 +188,37 @@ require("lazy").setup({
 
     -- Productivity Tools
 {
-  "okuuva/auto-save.nvim",
-  cmd = "ASToggle",
+  "pocco81/auto-save.nvim",
   event = { "InsertLeave", "TextChanged" },
-  opts = {
-    enabled = true,
-    trigger_events = { "InsertLeave", "TextChanged" },
-    write_all_buffers = false, -- Save only current buffer
-    debounce_delay = 1000,     -- 1 second debounce
-    -- Save conditions
-    condition = function(buf)
-      local fn = vim.fn
-      local utils = require("auto-save.utils.data")
-      
-      -- Get buffer filetype
-      local filetype = fn.getbufvar(buf, "&filetype")
-      
-      -- Don't save special buffer types
-      if utils.not_in(filetype, { "oil", "alpha", "neo-tree", "nvim-tree", "dashboard", "startify" }) then
-        -- Also check if buffer has a valid filename
-        local bufname = vim.api.nvim_buf_get_name(buf)
-        if bufname and bufname ~= "" and not bufname:match("^%w+://") then
-          return true
-        end
-      end
-      return false
-    end,
-    -- Callbacks for custom actions
-    callbacks = {
-      before_saving = function(buf)
-        -- Only organize imports for TypeScript/JavaScript files
-        local filetype = vim.bo[buf].filetype
-        if vim.tbl_contains({ "typescript", "javascript", "typescriptreact", "javascriptreact" }, filetype) then
-          -- Organize imports for TypeScript/JavaScript
-          local params = {
-            command = "_typescript.organizeImports",
-            arguments = { vim.api.nvim_buf_get_name(buf) },
-            title = "Organize Imports"
-          }
-          
-          -- Find tsserver client
-          local clients = vim.lsp.get_clients({ bufnr = buf })
-          for _, client in ipairs(clients) do
-            if client.name == "tsserver" or client.name == "typescript-language-server" then
-              -- Use async request to avoid blocking
-              client.request("workspace/executeCommand", params, function(err, result)
-                if err then
-                  vim.notify("Failed to organize imports: " .. tostring(err), vim.log.levels.WARN)
-                end
-              end, buf)
-              break
-            end
-          end
-        end
+  config = function()
+    require("auto-save").setup({
+      enabled = true,
+      execution_message = {
+        message = function()
+          return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
+        end,
+        dim = 0.18,
+        cleaning_interval = 1250,
+      },
+      trigger_events = { "InsertLeave", "TextChanged" },
+      condition = function(buf)
+        local fn = vim.fn
+        local utils = require("auto-save.utils.data")
+        return fn.getbufvar(buf, "&modifiable") == 1
+          and utils.not_in(fn.getbufvar(buf, "&filetype"), {})
       end,
-      after_saving = function(buf)
-        -- Optional: Show a message after saving
-        -- vim.notify("Buffer saved: " .. vim.api.nvim_buf_get_name(buf), vim.log.levels.INFO)
-      end,
-    },
-  },
-  keys = {
-    { "<leader>as", "<cmd>ASToggle<cr>", desc = "Toggle Auto Save" },
-  },
-},
+      write_all_buffers = false,
+      debounce_delay = 135,
+      callbacks = {
+        after_saving = function()
+          -- run your two commands after every auto-save
+          vim.cmd("normal! <leader>co")
+          vim.cmd("normal! <leader>cM")
+        end,
+      },
+    })
+  end,
+}
 
     -- Focus Mode
     {
