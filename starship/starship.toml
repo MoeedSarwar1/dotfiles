@@ -1,0 +1,161 @@
+
+# ============================================================================
+# Starship Prompt Configuration
+# Location: ~/.config/dotfiles/starship/starship.toml
+# ============================================================================
+
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# ============================================================================
+# General Settings
+# ============================================================================
+
+add_newline = true
+
+# Custom format layout
+format = """
+$username\
+$character
+"""
+
+# Right-side prompt
+right_format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$rust\
+$python\
+$java\
+$dart\
+$cmd_duration\
+$time\
+"""
+
+# ============================================================================
+# Prompt Character
+# ============================================================================
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[✗](bold red)"
+vicmd_symbol = "[❮](bold yellow)"
+
+# ============================================================================
+# OS & System Info
+# ============================================================================
+
+[os]
+format = "[$symbol]($style) "
+style = "bold blue"
+disabled = false
+
+[username]
+style_user = "bold cyan"
+show_always = true
+format = "[$user]($style)"
+
+[hostname]
+ssh_only = false
+style = "bold cyan"
+format = "[@$hostname]($style) "
+
+# ============================================================================
+# Directory
+# ============================================================================
+
+[directory]
+style = "bold blue"
+truncation_length = 3
+truncation_symbol = "…/"
+home_symbol = "🏠"
+read_only = " 🔒"
+read_only_style = "red"
+
+# ============================================================================
+# Git
+# ============================================================================
+
+[git_branch]
+symbol = "🌱 "
+style = "bold yellow"
+format = "on [$symbol$branch]($style) "
+
+[git_status]
+style = "bold red"
+conflicted = "⚔️ "
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+staged = "[●${count}](green)"
+untracked = "[…${count}](red)"
+modified = "[✚${count}](yellow)"
+stashed = "📦"
+deleted = "[✖${count}](red)"
+renamed = "[»${count}](blue)"
+
+# ============================================================================
+# Programming Languages
+# ============================================================================
+
+[nodejs]
+format = "via [⬢ $version](bold green) "
+detect_files = ["package.json", "node_modules", ".nvmrc"]
+detect_folders = ["node_modules"]
+disabled = false
+
+
+[rust]
+format = "via [⚙️ $version](bold red) "
+detect_files = ["Cargo.toml"]
+disabled = false
+
+[python]
+format = "via [🐍 $version](bold yellow) "
+detect_extensions = ["py"]
+detect_files = ["requirements.txt", "pyproject.toml", "Pipfile"]
+disabled = false
+
+[java]
+format = "via [☕ $version](bold red) "
+detect_extensions = ["java", "class", "jar", "gradle", "clj", "cljc"]
+detect_files = ["pom.xml", "build.gradle.kts", "build.sbt", ".java-version"]
+disabled = false
+
+[dart]
+format = "via [🎯 $version](bold blue) "
+detect_extensions = ["dart"]
+detect_files = ["pubspec.yaml", "pubspec.yml"]
+disabled = false
+
+# ============================================================================
+# Additional Tools
+# ============================================================================
+
+[docker_context]
+format = "via [🐋 $context](blue bold) "
+disabled = false
+
+[package]
+disabled = true
+
+# ============================================================================
+# Command Duration
+# ============================================================================
+
+[cmd_duration]
+min_time = 500
+format = "took [$duration](bold yellow) "
+disabled = false
+
+# ============================================================================
+# Time
+# ============================================================================
+
+[time]
+disabled = false
+format = "[$time]($style)"
+time_format = "%H:%M:%S"
+style = "bold dimmed white"
+

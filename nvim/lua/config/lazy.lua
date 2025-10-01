@@ -204,21 +204,28 @@ require("lazy").setup({
       condition = function(buf)
         local fn = vim.fn
         local utils = require("auto-save.utils.data")
-        return fn.getbufvar(buf, "&modifiable") == 1
-          and utils.not_in(fn.getbufvar(buf, "&filetype"), {})
+        if
+          fn.getbufvar(buf, "&modifiable") == 1 and
+          utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
+          return true
+        end
+        return false
       end,
       write_all_buffers = false,
       debounce_delay = 135,
       callbacks = {
         after_saving = function()
-          -- run your two commands after every auto-save
-          vim.cmd("normal! <leader>co")
-          vim.cmd("normal! <leader>cM")
+          local ft = vim.bo.filetype
+          if ft == "typescript" or ft == "typescriptreact" then
+            -- use typescript.nvim API
+            require("typescript").actions.organizeImports()
+            require("typescript").actions.addMissingImports()
+          end
         end,
       },
     })
   end,
-}
+},
 
     -- Focus Mode
     {
