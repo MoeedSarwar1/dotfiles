@@ -510,9 +510,9 @@ return {
 
       -- Enhanced defaults
       opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
-        prompt_prefix = " ",
-        selection_caret = " ",
-        entry_prefix = "  ",
+ prompt_prefix = " ",       -- or "🔍 " (anything you like)
+  selection_caret = " ",     -- arrow instead of space
+  entry_prefix = "",   
         initial_mode = "insert",
         selection_strategy = "reset",
         sorting_strategy = "ascending",

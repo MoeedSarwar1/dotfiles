@@ -64,16 +64,18 @@ keymap("n", "<leader>O", "O<Esc>", { desc = "Insert line above" })
 keymap("n", "<C-m>", "<C-i>", opts)
 
 -- ========================================
--- TAB MANAGEMENT
+-- BUFFER MANAGEMENT
 -- ========================================
--- Tab operations
-keymap("n", "te", ":tabnew<CR>", { desc = "New tab" })
-keymap("n", "tc", ":tabclose<CR>", { desc = "Close tab" })
-keymap("n", "<Tab>", ":tabnext<CR>", { desc = "Next tab" })
-keymap("n", "<S-Tab>", ":tabprev<CR>", { desc = "Previous tab" })
+-- Buffer navigation
+keymap("n", "<Tab>", ":bnext<CR>", { desc = "Next buffer" })
+keymap("n", "<S-Tab>", ":bprevious<CR>", { desc = "Previous buffer" })
 
--- Move tabs
-keymap("n", "<leader>tm", ":tabmove<CR>", { desc = "Move tab" })
+-- Close buffer
+keymap("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
+keymap("n", "<leader>bD", ":bdelete!<CR>", { desc = "Force delete buffer" })
+
+-- Navigate to specific buffer with fzf
+keymap("n", "<leader>bb", ":FzfLua buffers<CR>", { desc = "Find buffers" })
 
 -- ========================================
 -- WINDOW MANAGEMENT
