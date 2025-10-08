@@ -34,7 +34,18 @@ vim.opt.wildoptions = "pum" -- Use popup menu for completion
 -- UI & VISUAL ELEMENTS
 -- ========================================
 -- Window bar configuration (shows modification status and filename)
-vim.opt.winbar = "%=%m %f"
+vim.opt.winbar = " "
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = function()
+    vim.api.nvim_set_hl(0, "WinBar", { bg = "NONE" })
+    vim.api.nvim_set_hl(0, "WinBarNC", { bg = "NONE" })
+  end,
+})
+
+-- Also set it immediately
+vim.api.nvim_set_hl(0, "WinBar", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "WinBarNC", { bg = "NONE" })
 
 -- Tab line behavior
 vim.opt.showtabline = 0 -- Never show tab line (using bufferline instead)

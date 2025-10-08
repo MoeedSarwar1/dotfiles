@@ -681,7 +681,7 @@ return {
               ["<C-e>"] = fb_actions.goto_home_dir,
               ["<C-w>"] = fb_actions.goto_cwd,
               ["<C-t>"] = fb_actions.change_cwd,
-              ["<C-f>"] = fb_actions.toggle_browser,
+              ["<C-b>"] = fb_actions.toggle_browser,
               ["<C-h>"] = fb_actions.toggle_hidden,
               ["<C-s>"] = fb_actions.toggle_all,
               ["<bs>"] = fb_actions.backspace,

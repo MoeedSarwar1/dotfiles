@@ -49,6 +49,7 @@
   "pipScreenCornerOffset" : 15,
   "restartAppOnWakeUp" : false,
   "restoreHiddenAppsOnSwitch" : true,
+  "runScriptAfterWorkspaceChange" : "",
   "runScriptOnLaunch" : "",
   "runScriptOnProfileChange" : "",
   "runScriptOnWorkspaceChange" : "",

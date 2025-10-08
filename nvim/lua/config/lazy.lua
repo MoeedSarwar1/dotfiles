@@ -25,7 +25,7 @@ require("lazy").setup({
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
       opts = {
-        colorscheme = "tokyonight", -- or your preferred colorscheme
+        colorscheme = "catppuccin-mocha", -- or your preferred colorscheme
       },
     },
 
@@ -310,7 +310,7 @@ require("lazy").setup({
   },
 
   install = {
-    colorscheme = { "tokyonight", "habamax" },
+  colorscheme = { "catppuccin-mocha", "tokyonight", "habamax" },
     missing = true,
   },
 
