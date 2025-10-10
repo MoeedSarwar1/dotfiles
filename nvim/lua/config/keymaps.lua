@@ -106,21 +106,6 @@ keymap("n", "<C-Down>", "<C-w>-", { desc = "Decrease window height" })
 keymap("n", "sq", "<C-w>q", { desc = "Close window" })
 
 -- ========================================
--- PLUGIN-SPECIFIC KEYMAPS
--- ========================================
--- Copilot Chat
-keymap("n", "<leader>cQ", function()
-  require("CopilotChat").open()
-end, { desc = "Open Copilot Chat" })
-
-keymap("n", "<leader>cq", function()
-  require("CopilotChat").close()
-end, { desc = "Close Copilot Chat" })
-
--- Zen mode
-keymap("n", "<leader>z", ":ZenMode<CR>", { desc = "Toggle Zen Mode" })
-
--- ========================================
 -- DIAGNOSTICS & LSP
 -- ========================================
 -- Diagnostic navigation
