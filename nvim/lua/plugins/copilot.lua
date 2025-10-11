@@ -18,7 +18,7 @@ return {
       allow_insecure = false,
 
       -- Best model for coding (fast + smart)
-      model = "gpt-4o-mini",
+      model = "gpt-5-mini",
       temperature = 0.2,
 
       question_header = "## User",

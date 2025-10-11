@@ -28,9 +28,9 @@
         {
           "apps" : [
             {
-              "bundleIdentifier" : "net.kovidgoyal.kitty",
-              "iconPath" : "/Applications/kitty.app/Contents/Resources/kitty.icns",
-              "name" : "kitty"
+              "bundleIdentifier" : "com.mitchellh.ghostty",
+              "iconPath" : "/Applications/Ghostty.app/Contents/Resources/Ghostty.icns",
+              "name" : "Ghostty"
             }
           ],
           "assignAppShortcut" : "ctrl+shift+t",
@@ -44,13 +44,13 @@
         {
           "apps" : [
             {
-              "bundleIdentifier" : "",
-              "name" : "qemu-system-i386"
-            },
-            {
               "bundleIdentifier" : "com.apple.iphonesimulator",
               "iconPath" : "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/Resources/AppIcon.icns",
               "name" : "Simulator"
+            },
+            {
+              "bundleIdentifier" : "",
+              "name" : "qemu-system-i386"
             }
           ],
           "assignAppShortcut" : "opt+shift+e",

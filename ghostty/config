@@ -1,0 +1,128 @@
+# Beautiful Ghostty Terminal Configuration
+# Save this to: ~/Library/Application Support/com.mitchellh.ghostty/config
+
+# === FONTS ===
+font-family = JetBrainsMono Nerd Font
+font-style = Regular
+font-style-bold = Bold
+font-style-italic = Italic
+font-style-bold-italic = Bold Italic
+font-size = 15
+
+# Font features for ligatures and stylistic sets
+font-feature = ss01
+font-feature = ss02
+font-feature = ss03
+font-feature = ss04
+font-feature = ss05
+font-feature = ss06
+font-feature = ss07
+
+# === WINDOW APPEARANCE ===
+window-decoration = false
+window-padding-x = 12
+window-padding-y = 10
+window-padding-balance = true
+
+# === TRANSPARENCY & BLUR ===
+background-opacity = 0.6
+background-blur-radius = 20
+
+# === CURSOR ===
+cursor-style = block
+cursor-style-blink = false
+
+# === SCROLLBACK ===
+scrollback-limit = 2000
+
+# === MOUSE ===
+mouse-hide-while-typing = true
+link-url = true
+copy-on-select = false
+
+# === PERFORMANCE ===
+# Ghostty is highly optimized by default
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+# === TABS ===
+# Note: Ghostty handles tabs differently than Kitty
+# Tabs are managed by the window manager
+window-theme = ghostty
+window-inherit-working-directory = true
+window-inherit-font-size = true
+
+# === LAYOUTS ===
+# Ghostty uses native window management
+window-width = 1200
+window-height = 800
+
+# === ADVANCED ===
+confirm-close-surface = false
+quit-after-last-window-closed = true
+clipboard-trim-trailing-spaces = true
+
+# === KEYBOARD SHORTCUTS ===
+# Ghostty uses macOS standard shortcuts by default
+# Custom keybinds can be added here
+
+# Font size adjustments
+keybind = super+equal=increase_font_size:1
+keybind = super+minus=decrease_font_size:1
+keybind = super+0=reset_font_size
+
+# Tab management (uses native macOS tabs)
+keybind = cmd+t=new_tab
+keybind = cmd+w=close_surface
+keybind = shift+cmd+right=next_tab
+keybind = shift+cmd+left=previous_tab
+
+# Window management
+keybind = cmd+n=new_window
+
+# Config reload
+keybind = cmd+comma=reload_config
+
+# Split management (if using Ghostty splits)
+keybind = cmd+d=new_split:right
+keybind = cmd+shift+d=new_split:down
+
+# === macOS SPECIFIC ===
+macos-non-native-fullscreen = true
+macos-titlebar-style = hidden
+
+# === THEME ===
+# Catppuccin Mocha theme colors
+# You can also use: theme = catppuccin-mocha (if available in Ghostty's themes)
+
+# Background/Foreground
+background = #1e1e2e
+foreground = #cdd6f4
+
+# Cursor
+cursor-color = #f5e0dc
+cursor-text = #1e1e2e
+
+# Selection
+selection-background = #585b70
+selection-foreground = #cdd6f4
+
+# Normal colors
+palette = 0=#45475a
+palette = 1=#f38ba8
+palette = 2=#a6e3a1
+palette = 3=#f9e2af
+palette = 4=#89b4fa
+palette = 5=#f5c2e7
+palette = 6=#94e2d5
+palette = 7=#bac2de
+
+# Bright colors
+palette = 8=#585b70
+palette = 9=#f38ba8
+palette = 10=#a6e3a1
+palette = 11=#f9e2af
+palette = 12=#89b4fa
+palette = 13=#f5c2e7
+palette = 14=#94e2d5
+palette = 15=#a6adc8
