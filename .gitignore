@@ -1,66 +1,107 @@
-# ---------------------------------------------------
-# General safety for dotfiles repos
-# ---------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+.Spotlight-V100
+.Trashes
+._*
 
-# GitHub Copilot / AI config (may contain tokens)
-.github-copilot/
-github-copilot/
+# Editors / temp
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*~
+*.bak
+*.tmp
+*.temp
 
-# Node.js / JS projects
-node_modules/
+# Logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# Python / pipenv
+# Dependencies / language tooling
+node_modules/
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 *.egg-info/
 .venv/
+venv/
+dist/
+build/
+.turbo/
+.next/
+.nuxt/
+coverage/
 
-# macOS system files
-.DS_Store
-.AppleDouble
-.LSOverride
-Icon?
-
-# Editor/IDE config
-.vscode/
-.idea/
-*.swp
-*.swo
-*.swn
-
-# Shell history (may leak secrets)
-.zsh_history
-.bash_history
-
-# Environment / secrets
+# Env / generic secrets
 .env
 .env.*
+!.env.example
 *.secret
 *.key
 *.pem
 *.crt
 *.p12
+*.pfx
 *.token
 *.credentials
-*.config.json
+*.keystore
+*.keystore.lock
+*.jks
 
-# Cache files
+# Shell history
+.zsh_history
+.bash_history
+.zhistory
+
+# Caches
 .cache/
 npm-cache/
 pip-cache/
 yarn-cache/
 
-# Tmux plugins (you want them installed, not versioned)
-.tmux/plugins/
+# Android SDK local state
+.android/
 
-# Optional: lockfiles (if you don’t want machine-specific locks)
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
+# Secrets & auth (do not version)
+gh/hosts.yml
+ngrok/ngrok.yml
+rclone/rclone.conf
+zsh/.zshrc.local
+github-copilot/
+.github-copilot/
+iterm2/sockets/
+iterm2/AppSupport
+
+# Cursor: keep cli-config, drop chat/cache noise
+cursor/chats/
+cursor/statsig-cache.json
+cursor/projects/
+cursor/agent-transcripts/
+cursor/browser-logs/
+cursor/extensions/
+cursor/User/globalStorage/
+cursor/User/workspaceStorage/
+cursor/User/History/
+
+# Machine-local / runtime state
+swiftpm/
+tool_state
+configstore/update-notifier-@google/
+
+# Tmux plugins (installed by TPM, not versioned)
+tmux/plugins/
+
+# Kitty backup noise
+kitty/kitty.conf.bak
+
+# Local tooling timestamps / state
+nodemon.json

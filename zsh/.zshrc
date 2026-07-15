@@ -30,8 +30,8 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH="/usr/local/bin/fzf:$PATH"
 export PATH=$PATH:/usr/local/bin
 
-# API Keys
-export GEMINI_API_KEY='AIzaSyAAAEGPsHYrrt9PYB5_SCL-M3k1nTORSJ0'
+# API keys live in .zshrc.local (gitignored)
+[[ -f "$HOME/.config/dotfiles/zsh/.zshrc.local" ]] && source "$HOME/.config/dotfiles/zsh/.zshrc.local"
 
 # ============================================================================
 # React Native Aliases
@@ -147,3 +147,30 @@ eval "$(zoxide init zsh)"
 # Starship Prompt
 export STARSHIP_CONFIG="$HOME/.config/dotfiles/starship/starship.toml"
 eval "$(starship init zsh)"
+eval "$(rbenv init - zsh)"
+
+# Added by Antigravity
+export PATH="/Users/moeedsarwar/.antigravity/antigravity/bin:$PATH"
+export PATH="$PATH:/Users/moeedsarwar/flutter/flutter/bin"
+
+# Added by Antigravity IDE
+export PATH="/Users/moeedsarwar/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+# Added by Antigravity IDE
+export PATH="/Users/moeedsarwar/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+# Added by Antigravity IDE
+export PATH="/Users/moeedsarwar/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+# Added by Antigravity IDE
+export PATH="/Users/moeedsarwar/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+# Added by Antigravity IDE
+export PATH="/Users/moeedsarwar/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+# Added by Antigravity IDE
+export PATH="/Users/moeedsarwar/.antigravity-ide/antigravity-ide/bin:$PATH"
+
+# Added by Devin
+export PATH="/Users/moeedsarwar/.codeium/windsurf/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"

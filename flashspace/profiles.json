@@ -10,11 +10,6 @@
               "bundleIdentifier" : "com.google.Chrome",
               "iconPath" : "/Applications/Google Chrome.app/Contents/Resources/app.icns",
               "name" : "Google Chrome"
-            },
-            {
-              "bundleIdentifier" : "com.apple.finder",
-              "iconPath" : "/System/Library/CoreServices/Finder.app/Contents/Resources/Finder.icns",
-              "name" : "Finder"
             }
           ],
           "assignAppShortcut" : "opt+shift+b",
@@ -28,38 +23,23 @@
         {
           "apps" : [
             {
-              "bundleIdentifier" : "com.mitchellh.ghostty",
-              "iconPath" : "/Applications/Ghostty.app/Contents/Resources/Ghostty.icns",
-              "name" : "Ghostty"
+              "bundleIdentifier" : "com.microsoft.VSCode",
+              "iconPath" : "/Applications/Visual Studio Code.app/Contents/Resources/Code.icns",
+              "name" : "Code"
+            },
+            {
+              "bundleIdentifier" : "com.apple.iphonesimulator",
+              "iconPath" : "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/Resources/AppIcon.icns",
+              "name" : "Simulator"
             }
           ],
-          "assignAppShortcut" : "ctrl+shift+t",
+          "assignAppShortcut" : "opt+shift+t",
           "display" : "Built-in Retina Display",
           "id" : "A565DD05-D06F-44D7-8B8C-A1D97AFC9BC6",
           "name" : "Coding",
           "openAppsOnActivation" : true,
           "shortcut" : "opt+t",
           "symbolIconName" : "apple.terminal"
-        },
-        {
-          "apps" : [
-            {
-              "bundleIdentifier" : "com.apple.iphonesimulator",
-              "iconPath" : "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/Resources/AppIcon.icns",
-              "name" : "Simulator"
-            },
-            {
-              "bundleIdentifier" : "",
-              "name" : "qemu-system-i386"
-            }
-          ],
-          "assignAppShortcut" : "opt+shift+e",
-          "display" : "Built-in Retina Display",
-          "id" : "D3625543-FAC7-43B1-96F3-314A07DE01D5",
-          "name" : "Simulators",
-          "openAppsOnActivation" : true,
-          "shortcut" : "opt+e",
-          "symbolIconName" : "iphone.gen1"
         },
         {
           "apps" : [
@@ -161,7 +141,7 @@
             },
             {
               "bundleIdentifier" : "com.figma.Desktop",
-              "iconPath" : "/Applications/Figma.app/Contents/Resources/icon.icns",
+              "iconPath" : "/Applications/Figma.app/Contents/Resources/electron.icns",
               "name" : "Figma"
             }
           ],

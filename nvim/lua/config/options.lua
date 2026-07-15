@@ -34,7 +34,9 @@ vim.opt.wildoptions = "pum" -- Use popup menu for completion
 -- UI & VISUAL ELEMENTS
 -- ========================================
 -- Window bar configuration (shows modification status and filename)
-vim.opt.winbar = " "
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = true
+vim.opt.winbar = ""
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = function()

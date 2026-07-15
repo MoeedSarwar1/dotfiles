@@ -44,11 +44,9 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.test.core" },
 
     -- AI Integration
-    { import = "lazyvim.plugins.extras.ai.copilot" },
-    { import = "lazyvim.plugins.extras.ai.copilot-chat" },
+    -- { import = "lazyvim.plugins.extras.ai.avante" },
 
     -- UI Enhancements
-    { import = "lazyvim.plugins.extras.ui.alpha" },
     { import = "lazyvim.plugins.extras.editor.mini-files" },
 
     -- ========================================
@@ -125,67 +123,6 @@ require("lazy").setup({
       end,
     },
 
-    -- Modern Utilities (Snacks)
-    {
-      "folke/snacks.nvim",
-      priority = 1000,
-      lazy = false,
-      opts = {
-        -- Core features
-        bigfile = {
-          enabled = true,
-          size = 1.5 * 1024 * 1024, -- 1.5MB
-        },
-        dashboard = {
-          enabled = true,
-          sections = {
-            { section = "header" },
-            { section = "keys", gap = 1, padding = 1 },
-            { section = "startup" },
-          },
-        },
-        indent = {
-          enabled = true,
-          animate = {
-            enabled = vim.g.snacks_animate ~= false,
-          },
-        },
-        input = { enabled = true },
-        notifier = {
-          enabled = true,
-          timeout = 3000,
-          width = { min = 40, max = 0.4 },
-          height = { min = 1, max = 0.6 },
-          margin = { top = 0, right = 1, bottom = 0 },
-        },
-        quickfile = { enabled = true },
-        scroll = {
-          enabled = true,
-          animate = {
-            duration = { step = 15, total = 250 },
-            easing = "linear",
-          },
-        },
-        statuscolumn = {
-          enabled = true,
-          left = { "mark", "sign" },
-          right = { "fold", "git" },
-          folds = {
-            open = true,
-            git_hl = true,
-          },
-          git = {
-            patterns = { "GitSign", "MiniDiffSign" },
-          },
-        },
-        words = {
-          enabled = true,
-          debounce = 200,
-        },
-        zen = { enabled = false }, -- We use zen-mode.nvim instead
-      },
-    },
-
     -- Productivity Tools
 {
   "pocco81/auto-save.nvim",
@@ -227,6 +164,78 @@ require("lazy").setup({
   end,
 },
 
+    -- Focus Mode
+    {
+      "folke/zen-mode.nvim",
+      cmd = "ZenMode",
+      dependencies = {
+        {
+          "folke/twilight.nvim",
+          opts = {
+            dimming = {
+              alpha = 0.25,
+              color = { "Normal", "#ffffff" },
+              term_bg = "#000000",
+              inactive = false,
+            },
+            context = 10,
+            treesitter = true,
+            expand = {
+              "function",
+              "method",
+              "table",
+              "if_statement",
+            },
+            exclude = {},
+          },
+        },
+      },
+      keys = {
+        { "<leader>zz", "<cmd>ZenMode<cr>", desc = "Toggle Zen Mode" },
+        { "<leader>zt", "<cmd>Twilight<cr>", desc = "Toggle Twilight" },
+      },
+      opts = {
+        window = {
+          backdrop = 0.95,
+          width = 0.8, -- Use percentage for responsiveness
+          height = 1,
+          options = {
+            signcolumn = "no",
+            number = false,
+            relativenumber = false,
+            cursorline = false,
+            cursorcolumn = false,
+            foldcolumn = "0",
+            list = false,
+            wrap = false,
+            linebreak = true,
+          },
+        },
+        plugins = {
+          options = {
+            enabled = true,
+            ruler = false,
+            showcmd = false,
+            laststatus = 0,
+          },
+          twilight = { enabled = true },
+          gitsigns = { enabled = false },
+          tmux = { enabled = true },
+          kitty = {
+            enabled = false,
+            font = "+4",
+          },
+        },
+        on_open = function()
+          vim.cmd("IBLDisable")
+          vim.opt.showtabline = 0
+        end,
+        on_close = function()
+          vim.cmd("IBLEnable")
+          vim.opt.showtabline = 2
+        end,
+      },
+    },
   },
 
   -- ========================================

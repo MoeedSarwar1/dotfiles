@@ -2,12 +2,12 @@
 # Save this to: ~/Library/Application Support/com.mitchellh.ghostty/config
 
 # === FONTS ===
-font-family = JetBrainsMono Nerd Font
+font-family = JetBrains Nerd Font
 font-style = Regular
 font-style-bold = Bold
 font-style-italic = Italic
 font-style-bold-italic = Bold Italic
-font-size = 15
+font-size = 16
 
 # Font features for ligatures and stylistic sets
 font-feature = ss01

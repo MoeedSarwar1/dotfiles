@@ -1,100 +1,21 @@
 return {
-  -- ========================================
-  -- LUALINE - Enhanced statusline
-  -- ========================================
-{
-  "folke/noice.nvim",
-  event = "VeryLazy",
-  dependencies = {
-    "MunifTanjim/nui.nvim",
-    "rcarriga/nvim-notify",
-  },
-  opts = function(_, opts)
-    -- your existing opts (unchanged) …
-    return opts
-  end,
-  keys = {
-    { "<leader>sn", "", desc = "+noice" },
-    {
-      "<S-Enter>",
-      function()
-        require("noice").redirect(vim.fn.getcmdline())
-      end,
-      mode = "c",
-      desc = "Redirect Cmdline",
-    },
-    {
-      "<leader>snl",
-      function()
-        require("noice").cmd("last")
-      end,
-      desc = "Noice Last Message",
-    },
-    {
-      "<leader>snh",
-      function()
-        require("noice").cmd("history")
-      end,
-      desc = "Noice History",
-    },
-    {
-      "<leader>sna",
-      function()
-        require("noice").cmd("all")
-      end,
-      desc = "Noice All",
-    },
-    {
-      "<leader>snd",
-      function()
-        require("noice").cmd("dismiss")
-      end,
-      desc = "Dismiss All",
-    },
-    {
-      "<leader>snt",
-      function()
-        require("noice").cmd("pick")
-      end,
-      desc = "Noice Picker (Telescope/FzfLua)",
-    },
-  },
-  config = function(_, opts)
-    require("noice").setup(opts)
-
-    -- 🔑 Explicitly remove Noice's default scroll bindings
-    vim.keymap.del({ "i", "n", "s" }, "<C-f>")
-    vim.keymap.del({ "i", "n", "s" }, "<C-b>")
-  end,
-},
-
-  -- ========================================
-  -- NOICE - Enhanced UI for messages, cmdline and popupmenu
-  -- ========================================
   {
     "folke/noice.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    },
     opts = function(_, opts)
-      -- Ensure opts.routes exists
       opts.routes = opts.routes or {}
 
-      -- Filter out common noisy notifications
       local noise_filters = {
         { find = "No information available" },
         { find = "written" },
-        { find = "^%d+L, %d+B$" }, -- File stats on save
+        { find = "^%d+L, %d+B$" },
         { find = "^--No lines in buffer--$" },
         { find = "^search hit" },
         { find = "^E486: Pattern not found" },
-        { find = "^%d+ change" }, -- Change count
-        { find = "^%d+ line" }, -- Line count
+        { find = "^%d+ change" },
+        { find = "^%d+ line" },
         { find = "^%d+ more line" },
         { find = "^%d+ fewer line" },
-        { find = "^Already at" }, -- Already at newest/oldest change
+        { find = "^Already at" },
       }
 
       for _, filter in ipairs(noise_filters) do
@@ -108,7 +29,6 @@ return {
         })
       end
 
-      -- LSP progress filtering
       table.insert(opts.routes, {
         filter = {
           event = "lsp",
@@ -121,7 +41,6 @@ return {
         opts = { skip = true },
       })
 
-      -- Focus-based notification routing
       local focused = true
       vim.api.nvim_create_autocmd("FocusGained", {
         group = vim.api.nvim_create_augroup("NoiceFocusGained", { clear = true }),
@@ -136,7 +55,6 @@ return {
         end,
       })
 
-      -- Send notifications to system when unfocused
       table.insert(opts.routes, 1, {
         filter = {
           event = "notify",
@@ -149,7 +67,6 @@ return {
         opts = { stop = false },
       })
 
-      -- Enhanced command configuration
       opts.commands = {
         all = {
           view = "split",
@@ -193,15 +110,14 @@ return {
         },
       }
 
-      -- Enhanced presets
-      opts.presets = opts.presets or {}
-      opts.presets.bottom_search = true
-      opts.presets.command_palette = true
-      opts.presets.long_message_to_split = true
-      opts.presets.inc_rename = true
-      opts.presets.lsp_doc_border = true
+      opts.presets = vim.tbl_deep_extend("force", opts.presets or {}, {
+        bottom_search = true,
+        command_palette = true,
+        long_message_to_split = true,
+        inc_rename = true,
+        lsp_doc_border = true,
+      })
 
-      -- Views configuration
       opts.views = opts.views or {}
       opts.views.cmdline_popup = {
         position = {
@@ -232,7 +148,6 @@ return {
         },
       }
 
-      -- LSP configuration
       opts.lsp = opts.lsp or {}
       opts.lsp.override = {
         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -242,8 +157,6 @@ return {
       opts.lsp.hover = {
         enabled = true,
         silent = false,
-        view = nil,
-        opts = {},
       }
       opts.lsp.signature = {
         enabled = true,
@@ -253,58 +166,10 @@ return {
           luasnip = true,
           throttle = 50,
         },
-        view = nil,
-        opts = {},
       }
 
       return opts
     end,
-    keys = {
-      { "<leader>sn", "", desc = "+noice" },
-      {
-        "<S-Enter>",
-        function()
-          require("noice").redirect(vim.fn.getcmdline())
-        end,
-        mode = "c",
-        desc = "Redirect Cmdline",
-      },
-      {
-        "<leader>snl",
-        function()
-          require("noice").cmd("last")
-        end,
-        desc = "Noice Last Message",
-      },
-      {
-        "<leader>snh",
-        function()
-          require("noice").cmd("history")
-        end,
-        desc = "Noice History",
-      },
-      {
-        "<leader>sna",
-        function()
-          require("noice").cmd("all")
-        end,
-        desc = "Noice All",
-      },
-      {
-        "<leader>snd",
-        function()
-          require("noice").cmd("dismiss")
-        end,
-        desc = "Dismiss All",
-      },
-      {
-        "<leader>snt",
-        function()
-          require("noice").cmd("pick")
-        end,
-        desc = "Noice Picker (Telescope/FzfLua)",
-      },
-    },
   },
 
   -- ========================================
