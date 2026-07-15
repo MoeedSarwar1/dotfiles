@@ -126,3 +126,22 @@ palette = 12=#89b4fa
 palette = 13=#f5c2e7
 palette = 14=#94e2d5
 palette = 15=#a6adc8
+
+# Navigate between splits
+keybind = cmd+j=goto_split:bottom
+keybind = cmd+k=goto_split:top
+keybind = cmd+h=goto_split:left
+keybind = cmd+l=goto_split:right
+
+# Or cycle through splits
+keybind = cmd+]=goto_split:next
+keybind = cmd+[=goto_split:previous
+
+# Resize splits (hold to repeat)
+keybind = cmd+shift+j=resize_split:down,20
+keybind = cmd+shift+k=resize_split:up,20
+keybind = cmd+shift+h=resize_split:left,20
+keybind = cmd+shift+l=resize_split:right,20
+
+# Equalize all split sizes
+keybind = cmd+shift+equal=equalize_splits
