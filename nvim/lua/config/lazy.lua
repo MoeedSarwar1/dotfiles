@@ -55,29 +55,6 @@ require("lazy").setup({
     -- Import user plugins
     { import = "plugins" },
 
-    -- Text Manipulation
-    {
-      "kylechui/nvim-surround",
-      version = "*",
-      event = "VeryLazy",
-      config = function()
-        require("nvim-surround").setup({
-          keymaps = {
-            insert = "<C-g>s",
-            insert_line = "<C-g>S",
-            normal = "ys",
-            normal_cur = "yss",
-            normal_line = "yS",
-            normal_cur_line = "ySS",
-            visual = "S",
-            visual_line = "gS",
-            delete = "ds",
-            change = "cs",
-            change_line = "cS",
-          },
-        })
-      end,
-    },
 
     -- Git Integration
     {
@@ -149,7 +126,7 @@ require("lazy").setup({
         return false
       end,
       write_all_buffers = false,
-      debounce_delay = 135,
+      debounce_delay = 1000,
       callbacks = {
         after_saving = function()
           local ft = vim.bo.filetype

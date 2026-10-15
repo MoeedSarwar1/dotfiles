@@ -149,28 +149,4 @@ export STARSHIP_CONFIG="$HOME/.config/dotfiles/starship/starship.toml"
 eval "$(starship init zsh)"
 eval "$(rbenv init - zsh)"
 
-# Added by Antigravity
-export PATH="/Users/moeedsarwar/.antigravity/antigravity/bin:$PATH"
-export PATH="$PATH:/Users/moeedsarwar/flutter/flutter/bin"
-
-# Added by Antigravity IDE
-export PATH="/Users/moeedsarwar/.antigravity-ide/antigravity-ide/bin:$PATH"
-
-# Added by Antigravity IDE
-export PATH="/Users/moeedsarwar/.antigravity-ide/antigravity-ide/bin:$PATH"
-
-# Added by Antigravity IDE
-export PATH="/Users/moeedsarwar/.antigravity-ide/antigravity-ide/bin:$PATH"
-
-# Added by Antigravity IDE
-export PATH="/Users/moeedsarwar/.antigravity-ide/antigravity-ide/bin:$PATH"
-
-# Added by Antigravity IDE
-export PATH="/Users/moeedsarwar/.antigravity-ide/antigravity-ide/bin:$PATH"
-
-# Added by Antigravity IDE
-export PATH="/Users/moeedsarwar/.antigravity-ide/antigravity-ide/bin:$PATH"
-
-# Added by Devin
-export PATH="/Users/moeedsarwar/.codeium/windsurf/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
+alias kage="python3 main.py"
