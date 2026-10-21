@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# Pick a project with fzf and jump to its tmux session, creating it if needed.
+# New sessions get: 1 editor (nvim), 2 shell, and 3 metro for React Native / Expo projects.
+#
+#   tmux-sessionizer            pick from git repos under $PROJECT_ROOTS
+#   tmux-sessionizer <dir>      open <dir> directly
+#
+# Inside tmux it is bound to prefix + f (see tmux.conf); in zsh it is `tp`.
+
+set -euo pipefail
+
+PROJECT_ROOTS=${PROJECT_ROOTS:-"$HOME/Projects"}
+EXTRA_DIRS=("$HOME/.config/dotfiles")
+
+list_projects() {
+  for root in $PROJECT_ROOTS; do
+    [[ -d $root ]] || continue
+    find "$root" -maxdepth 4 -name node_modules -prune -o -type d -name .git -print 2>/dev/null |
+      sed 's#/\.git$##'
+  done
+  printf '%s\n' "${EXTRA_DIRS[@]}"
+}
+
+if [[ $# -eq 1 ]]; then
+  dir=$(cd "$1" && pwd)
+else
+  dir=$(list_projects | sed "s#^$HOME#~#" | sort -u |
+    fzf --prompt="project> " --height=40% --reverse) || exit 0
+  dir=${dir/#\~/$HOME}
+fi
+
+# tmux session names can't contain dots or colons
+name=$(basename "$dir" | tr '.:' '__')
+
+if ! tmux has-session -t="$name" 2>/dev/null; then
+  tmux new-session -d -s "$name" -c "$dir" -n editor
+  tmux send-keys -t "$name:editor" "nvim ." Enter
+  tmux new-window -d -t "$name" -c "$dir" -n shell
+
+  if [[ -f $dir/package.json ]]; then
+    if grep -q '"expo"' "$dir/package.json"; then
+      metro_cmd="npx expo start"
+    elif grep -q '"react-native"' "$dir/package.json"; then
+      metro_cmd="yarn react-native start"
+    else
+      metro_cmd=""
+    fi
+    if [[ -n $metro_cmd ]]; then
+      tmux new-window -d -t "$name" -c "$dir" -n metro
+      tmux send-keys -t "$name:metro" "$metro_cmd" Enter
+    fi
+  fi
+fi
+
+if [[ -n ${TMUX:-} ]]; then
+  tmux switch-client -t "$name"
+else
+  tmux attach-session -t "$name"
+fi

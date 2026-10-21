@@ -25,7 +25,7 @@ require("lazy").setup({
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
       opts = {
-        colorscheme = "catppuccin-mocha", -- or your preferred colorscheme
+        colorscheme = "catppuccin-mocha",
       },
     },
 
@@ -37,182 +37,25 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.json" },
     { import = "lazyvim.plugins.extras.lang.tailwind" },
     { import = "lazyvim.plugins.extras.lang.markdown" },
+    { import = "lazyvim.plugins.extras.lang.python" }, -- pyright + ruff
 
     -- Development Tools
     { import = "lazyvim.plugins.extras.linting.eslint" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },
     { import = "lazyvim.plugins.extras.test.core" },
 
-    -- AI Integration
-    -- { import = "lazyvim.plugins.extras.ai.avante" },
+    -- Editing
+    { import = "lazyvim.plugins.extras.coding.mini-surround" }, -- gsa / gsd / gsr add, delete, replace surroundings
+    { import = "lazyvim.plugins.extras.coding.yanky" }, -- yank history; [y / ]y cycle after a paste
+    { import = "lazyvim.plugins.extras.editor.inc-rename" }, -- <leader>cr previews the rename live
 
     -- UI Enhancements
     { import = "lazyvim.plugins.extras.editor.mini-files" },
 
     -- ========================================
-    -- CUSTOM PLUGINS
+    -- CUSTOM PLUGINS (lua/plugins/*.lua)
     -- ========================================
-    -- Import user plugins
     { import = "plugins" },
-
-
-    -- Git Integration
-    {
-      "f-person/git-blame.nvim",
-      event = "VeryLazy",
-      opts = {
-        enabled = true,
-        message_template = " <summary> • <date> • <author> • <<sha>>",
-        date_format = "%m-%d-%Y %H:%M:%S",
-        virtual_text_column = 1,
-        display_virtual_text = true,
-        ignored_filetypes = { "gitcommit", "gitrebase", "gitconfig" },
-        delay = 1000,
-      },
-      keys = {
-        { "<leader>gb", "<cmd>GitBlameToggle<cr>", desc = "Toggle Git Blame" },
-        { "<leader>gB", "<cmd>GitBlameCopySHA<cr>", desc = "Copy Git SHA" },
-      },
-    },
-
-    {
-      "kdheepak/lazygit.nvim",
-      cmd = {
-        "LazyGit",
-        "LazyGitConfig",
-        "LazyGitCurrentFile",
-        "LazyGitFilter",
-        "LazyGitFilterCurrentFile",
-      },
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-      },
-      keys = {
-        { "<leader>lg", "<cmd>LazyGit<cr>", desc = "Open LazyGit" },
-        { "<leader>lf", "<cmd>LazyGitCurrentFile<cr>", desc = "LazyGit Current File" },
-        { "<leader>lc", "<cmd>LazyGitConfig<cr>", desc = "LazyGit Config" },
-      },
-      config = function()
-        vim.g.lazygit_floating_window_winblend = 0
-        vim.g.lazygit_floating_window_scaling_factor = 0.9
-        vim.g.lazygit_floating_window_border_chars = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
-        vim.g.lazygit_floating_window_use_plenary = 0
-      end,
-    },
-
-    -- Productivity Tools
-{
-  "pocco81/auto-save.nvim",
-  event = { "InsertLeave", "TextChanged" },
-  config = function()
-    require("auto-save").setup({
-      enabled = true,
-      execution_message = {
-        message = function()
-          return ("AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"))
-        end,
-        dim = 0.18,
-        cleaning_interval = 1250,
-      },
-      trigger_events = { "InsertLeave", "TextChanged" },
-      condition = function(buf)
-        local fn = vim.fn
-        local utils = require("auto-save.utils.data")
-        if
-          fn.getbufvar(buf, "&modifiable") == 1 and
-          utils.not_in(fn.getbufvar(buf, "&filetype"), {}) then
-          return true
-        end
-        return false
-      end,
-      write_all_buffers = false,
-      debounce_delay = 1000,
-      callbacks = {
-        after_saving = function()
-          local ft = vim.bo.filetype
-          if ft == "typescript" or ft == "typescriptreact" then
-            -- use typescript.nvim API
-            require("typescript").actions.organizeImports()
-            require("typescript").actions.addMissingImports()
-          end
-        end,
-      },
-    })
-  end,
-},
-
-    -- Focus Mode
-    {
-      "folke/zen-mode.nvim",
-      cmd = "ZenMode",
-      dependencies = {
-        {
-          "folke/twilight.nvim",
-          opts = {
-            dimming = {
-              alpha = 0.25,
-              color = { "Normal", "#ffffff" },
-              term_bg = "#000000",
-              inactive = false,
-            },
-            context = 10,
-            treesitter = true,
-            expand = {
-              "function",
-              "method",
-              "table",
-              "if_statement",
-            },
-            exclude = {},
-          },
-        },
-      },
-      keys = {
-        { "<leader>zz", "<cmd>ZenMode<cr>", desc = "Toggle Zen Mode" },
-        { "<leader>zt", "<cmd>Twilight<cr>", desc = "Toggle Twilight" },
-      },
-      opts = {
-        window = {
-          backdrop = 0.95,
-          width = 0.8, -- Use percentage for responsiveness
-          height = 1,
-          options = {
-            signcolumn = "no",
-            number = false,
-            relativenumber = false,
-            cursorline = false,
-            cursorcolumn = false,
-            foldcolumn = "0",
-            list = false,
-            wrap = false,
-            linebreak = true,
-          },
-        },
-        plugins = {
-          options = {
-            enabled = true,
-            ruler = false,
-            showcmd = false,
-            laststatus = 0,
-          },
-          twilight = { enabled = true },
-          gitsigns = { enabled = false },
-          tmux = { enabled = true },
-          kitty = {
-            enabled = false,
-            font = "+4",
-          },
-        },
-        on_open = function()
-          vim.cmd("IBLDisable")
-          vim.opt.showtabline = 0
-        end,
-        on_close = function()
-          vim.cmd("IBLEnable")
-          vim.opt.showtabline = 2
-        end,
-      },
-    },
   },
 
   -- ========================================
@@ -224,7 +67,7 @@ require("lazy").setup({
   },
 
   install = {
-  colorscheme = { "catppuccin-mocha", "tokyonight", "habamax" },
+    colorscheme = { "catppuccin-mocha", "tokyonight", "habamax" },
     missing = true,
   },
 
@@ -251,33 +94,15 @@ require("lazy").setup({
   },
 
   performance = {
-    cache = {
-      enabled = true,
-    },
-    reset_packpath = true,
     rtp = {
-      reset = true,
-      paths = {},
       disabled_plugins = {
         "gzip",
-        "netrwPlugin",
+        "netrwPlugin", -- nvim-tree replaces netrw
         "tarPlugin",
         "tohtml",
         "tutor",
         "zipPlugin",
-        "matchit",
-        "matchparen",
-        "2html_plugin",
-        "getscript",
-        "getscriptPlugin",
-        "logipat",
-        "rrhelper",
-        "spellfile_plugin",
-        "vimball",
-        "vimballPlugin",
       },
     },
   },
-
-  debug = false,
 })

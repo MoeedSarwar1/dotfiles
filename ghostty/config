@@ -1,22 +1,16 @@
-# Beautiful Ghostty Terminal Configuration
-# Save this to: ~/Library/Application Support/com.mitchellh.ghostty/config
+# Ghostty config (symlinked from ~/Library/Application Support/com.mitchellh.ghostty/config)
 
 # === FONTS ===
-font-family = JetBrains Nerd Font
+font-family = JetBrainsMono Nerd Font Mono
 font-style = Regular
 font-style-bold = Bold
 font-style-italic = Italic
 font-style-bold-italic = Bold Italic
 font-size = 16
 
-# Font features for ligatures and stylistic sets
+# Font features (JetBrains Mono only ships ss01, ss02, ss19, ss20)
 font-feature = ss01
 font-feature = ss02
-font-feature = ss03
-font-feature = ss04
-font-feature = ss05
-font-feature = ss06
-font-feature = ss07
 
 # === WINDOW APPEARANCE ===
 window-decoration = false
@@ -33,7 +27,8 @@ cursor-style = block
 cursor-style-blink = false
 
 # === SCROLLBACK ===
-scrollback-limit = 2000
+# In bytes, not lines (10 MB)
+scrollback-limit = 10000000
 
 # === MOUSE ===
 mouse-hide-while-typing = true
@@ -83,9 +78,8 @@ keybind = cmd+n=new_window
 # Config reload
 keybind = cmd+comma=reload_config
 
-# Split management (if using Ghostty splits)
-keybind = cmd+d=new_split:right
-keybind = cmd+shift+d=new_split:down
+# Splits live in tmux (prefix | and prefix -, Ctrl+h/j/k/l to move),
+# so Ghostty's own split bindings are left out
 
 # === macOS SPECIFIC ===
 macos-non-native-fullscreen = true
@@ -126,22 +120,3 @@ palette = 12=#89b4fa
 palette = 13=#f5c2e7
 palette = 14=#94e2d5
 palette = 15=#a6adc8
-
-# Navigate between splits
-keybind = cmd+j=goto_split:bottom
-keybind = cmd+k=goto_split:top
-keybind = cmd+h=goto_split:left
-keybind = cmd+l=goto_split:right
-
-# Or cycle through splits
-keybind = cmd+]=goto_split:next
-keybind = cmd+[=goto_split:previous
-
-# Resize splits (hold to repeat)
-keybind = cmd+shift+j=resize_split:down,20
-keybind = cmd+shift+k=resize_split:up,20
-keybind = cmd+shift+h=resize_split:left,20
-keybind = cmd+shift+l=resize_split:right,20
-
-# Equalize all split sizes
-keybind = cmd+shift+equal=equalize_splits

@@ -194,4 +194,4 @@ alt-shift-l = ['join-with right', 'mode main']
 [[on-window-detected]]
 
 if.app-id = "com.apple.iphonesimulator"
-run ="move-node-to-workspace s"
+run = "move-node-to-workspace S"  # workspace names are case-sensitive; alt-s goes to "S"

@@ -34,46 +34,32 @@ return {
         NormalFloat = { bg = colors.none },
         FloatBorder = { bg = colors.none },
         FloatTitle = { bg = colors.none },
-        -- Telescope
-        TelescopeNormal = { bg = colors.none },
-        TelescopeBorder = { bg = colors.none },
-        TelescopeTitle = { bg = colors.none },
-        TelescopePromptNormal = { bg = colors.none },
-        TelescopePromptBorder = { bg = colors.none },
-        TelescopePromptTitle = { bg = colors.none },
-        TelescopeResultsNormal = { bg = colors.none },
-        TelescopeResultsBorder = { bg = colors.none },
-        TelescopeResultsTitle = { bg = colors.none },
-        TelescopePreviewNormal = { bg = colors.none },
-        TelescopePreviewBorder = { bg = colors.none },
-        TelescopePreviewTitle = { bg = colors.none },
-        
+        -- Pickers / explorer (snacks.picker, mini.files)
+        SnacksPicker = { bg = colors.none },
+        SnacksPickerBorder = { bg = colors.none },
+        MiniFilesNormal = { bg = colors.none },
+        MiniFilesBorder = { bg = colors.none },
+
         -- Completion menu
         Pmenu = { bg = colors.none },
         PmenuSel = { bg = colors.surface0, fg = colors.text },
         PmenuSbar = { bg = colors.none },
         PmenuThumb = { bg = colors.overlay0 },
-        
+
         -- WhichKey
         WhichKeyFloat = { bg = colors.none },
-        
+
         -- Lazy.nvim
         LazyNormal = { bg = colors.none },
-        
+
         -- Mason
         MasonNormal = { bg = colors.none },
-        
-        -- NeoTree/NvimTree
-        NeoTreeNormal = { bg = colors.none },
-        NeoTreeNormalNC = { bg = colors.none },
-        NvimTreeNormal = { bg = colors.none },
       }
     end,
     integrations = {
-      cmp = true,
+      blink_cmp = true,
+      snacks = { enabled = true },
       gitsigns = true,
-      nvimtree = true,
-      neotree = true,
       treesitter = true,
       notify = true,
       mini = {
@@ -98,15 +84,7 @@ return {
           background = true,
         },
       },
-      telescope = {
-        enabled = true,
-      },
       which_key = true,
-      indent_blankline = {
-        enabled = true,
-        colored_indent_levels = false,
-      },
     },
   },
 }
-

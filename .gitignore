@@ -105,3 +105,11 @@ kitty/kitty.conf.bak
 
 # Local tooling timestamps / state
 nodemon.json
+
+# Tool state that lands here because XDG_CONFIG_HOME points at this repo
+configstore/
+devin/
+homebrew/
+jgit/
+iterm2/
+kilo/

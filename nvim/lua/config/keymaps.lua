@@ -35,10 +35,9 @@ keymap("n", "x", '"_x', { desc = "Delete character without yanking" })
 -- Paste from yank register (register 0)
 keymap({ "n", "v" }, "<leader>p", '"0p', { desc = "Paste from yank register" })
 
--- Delete/change/cut without affecting default register
+-- Delete without affecting default register
+-- (<leader>c and <leader>x are LazyVim's code/diagnostics groups, so they stay free)
 keymap({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
-keymap({ "n", "v" }, "<leader>c", '"_c', { desc = "Change without yanking" })
-keymap({ "n", "v" }, "<leader>x", '"_x', { desc = "Cut without yanking" })
 
 -- ========================================
 -- EDITING ENHANCEMENTS
@@ -47,11 +46,7 @@ keymap({ "n", "v" }, "<leader>x", '"_x', { desc = "Cut without yanking" })
 keymap("n", "+", "<C-a>", { desc = "Increment number" })
 keymap("n", "-", "<C-x>", { desc = "Decrement number" })
 
--- Better word deletion
-keymap("n", "dw", 'vb"_d', { desc = "Delete word backwards without yanking" })
-
--- Select all
-keymap("n", "<C-a>", "gg<S-v>G", { desc = "Select all text" })
+-- Select all: ggVG (<C-a> is the tmux prefix, so a mapping on it never reaches nvim)
 
 -- Insert blank lines without entering insert mode
 keymap("n", "<leader>o", "o<Esc>", { desc = "Insert line below" })
@@ -67,28 +62,17 @@ keymap("n", "<C-m>", "<C-i>", opts)
 -- BUFFER MANAGEMENT
 -- ========================================
 -- Buffer navigation
-keymap("n", "<Tab>", ":bnext<CR>", { desc = "Next buffer" })
-keymap("n", "<S-Tab>", ":bprevious<CR>", { desc = "Previous buffer" })
+keymap("n", "<Tab>", "<cmd>bnext<CR>", { desc = "Next buffer" })
+keymap("n", "<S-Tab>", "<cmd>bprevious<CR>", { desc = "Previous buffer" })
 
--- Close buffer
-keymap("n", "<leader>bd", ":bdelete<CR>", { desc = "Delete buffer" })
-keymap("n", "<leader>bD", ":bdelete!<CR>", { desc = "Force delete buffer" })
-
--- Navigate to specific buffer with fzf
-keymap("n", "<leader>bb", ":FzfLua buffers<CR>", { desc = "Find buffers" })
+-- <leader>bd / <leader>bD come from LazyVim (Snacks.bufdelete keeps the window layout)
 
 -- ========================================
 -- WINDOW MANAGEMENT
 -- ========================================
--- Split windows
-keymap("n", "ss", "<C-w>s", { desc = "Horizontal split" })
-keymap("n", "sv", "<C-w>v", { desc = "Vertical split" })
-
--- Navigate windows
-keymap("n", "sh", "<C-w>h", { desc = "Move to left window" })
-keymap("n", "sj", "<C-w>j", { desc = "Move to bottom window" })
-keymap("n", "sk", "<C-w>k", { desc = "Move to top window" })
-keymap("n", "sl", "<C-w>l", { desc = "Move to right window" })
+-- Splits: LazyVim's <leader>- and <leader>| (s stays free for flash)
+-- Move between splits and tmux panes: <C-h/j/k/l> (see plugins/navigation.lua)
+-- Close a split: <leader>wd
 
 -- Resize windows
 keymap("n", "<C-w><Left>", "<C-w><", { desc = "Decrease window width" })
@@ -102,31 +86,16 @@ keymap("n", "<C-Right>", "<C-w>>", { desc = "Increase window width" })
 keymap("n", "<C-Up>", "<C-w>+", { desc = "Increase window height" })
 keymap("n", "<C-Down>", "<C-w>-", { desc = "Decrease window height" })
 
--- Close window
-keymap("n", "sq", "<C-w>q", { desc = "Close window" })
-
 -- ========================================
 -- DIAGNOSTICS & LSP
 -- ========================================
--- Diagnostic navigation
-keymap("n", "<C-j>", function()
-  vim.diagnostic.goto_next()
-end, { desc = "Next diagnostic" })
-
-keymap("n", "<C-k>", function()
-  vim.diagnostic.goto_prev()
-end, { desc = "Previous diagnostic" })
-
--- Show diagnostic information
-keymap("n", "<leader>dd", function()
-  vim.diagnostic.open_float()
-end, { desc = "Show diagnostic" })
+-- Diagnostic navigation: LazyVim's ]d / [d (errors only: ]e / [e)
+-- Line diagnostics float: LazyVim's <leader>cd
 
 -- ========================================
 -- UTILITY KEYMAPS
 -- ========================================
--- Clear search highlighting
-keymap("n", "<leader>/", ":nohlsearch<CR>", { desc = "Clear search highlighting" })
+-- Clear search highlighting: <Esc> (LazyVim); <leader>/ is grep
 
 -- Better indenting (keeps selection)
 keymap("v", "<", "<gv", { desc = "Indent left and reselect" })
@@ -141,9 +110,3 @@ keymap("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
 keymap("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
 keymap("n", "n", "nzzzv", { desc = "Next search result (centered)" })
 keymap("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
-
--- ========================================
--- DISABLED/COMMENTED FEATURES
--- ========================================
--- Save with root permission (commented out as noted)
--- vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})

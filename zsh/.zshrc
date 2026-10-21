@@ -26,9 +26,9 @@ export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-# General Path
-export PATH="/usr/local/bin/fzf:$PATH"
-export PATH=$PATH:/usr/local/bin
+
+# Dotfiles scripts (tmux-sessionizer, ...)
+export PATH="$HOME/.config/dotfiles/bin:$PATH"
 
 # API keys live in .zshrc.local (gitignored)
 [[ -f "$HOME/.config/dotfiles/zsh/.zshrc.local" ]] && source "$HOME/.config/dotfiles/zsh/.zshrc.local"
@@ -43,19 +43,19 @@ alias rnandroid="yarn react-native run-android"
 alias rnstart="yarn react-native start"
 alias rnclear="yarn react-native start --reset-cache"
 
-# Build commands
-alias keystore="z android/app && keytool -genkeypair -v -keystore moeed.keystore -alias moeed -keyalg RSA -keysize 2048 -validity 10000"
-alias rnapk="z android && ./gradlew assembleRelease && z -"
-alias rndebug="z android && ./gradlew assembleDebug && z -"
-alias rngradleclean="z android && ./gradlew clean && z -"
+# Build commands (subshells: always the current project's android/ios, never a zoxide guess)
+alias keystore="(cd android/app && keytool -genkeypair -v -keystore moeed.keystore -alias moeed -keyalg RSA -keysize 2048 -validity 10000)"
+alias rnapk="(cd android && ./gradlew assembleRelease)"
+alias rndebug="(cd android && ./gradlew assembleDebug)"
+alias rngradleclean="(cd android && ./gradlew clean)"
 alias rnprebuild="npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
 
 # iOS Pods
-alias podi="z ios && pod install && z -"
+alias podi="(cd ios && pod install)"
 
 # Clean commands
-alias aclean="z android && ./gradlew clean && z -"
-alias rnclean='rm -rf node_modules && yarn install && cd ios && pod install && cd .. && yarn react-native start --reset-cache'
+alias aclean="rngradleclean"
+alias rnclean='rm -rf node_modules && yarn install && (cd ios && pod install) && yarn react-native start --reset-cache'
 
 # Expo
 alias expoios='npx expo run:ios'
@@ -94,7 +94,7 @@ alias githome='git config user.name "Moeed Sarwar" && git config user.email "moe
 
 # Neovim
 alias n='nvim .'
-alias conf='z nvim'
+alias conf='cd ~/.config/dotfiles/nvim'
 
 # ============================================================================
 # Tmux Aliases
@@ -107,16 +107,20 @@ alias ta="tmux attach -t"
 alias tl="tmux ls"
 alias tk="tmux kill-session -t"
 
-# Smart tmux: attach if session exists, create if not
-alias ts='tmux attach -t $1 || tmux new -s $1'
+# Smart tmux: attach if session exists, create if not (aliases can't take $1)
+unalias ts 2>/dev/null
+function ts { tmux new -A -s "${1:-main}"; }
+
+# Pick a project and open/attach its tmux session (editor / shell / metro)
+alias tp="tmux-sessionizer"
 
 # ============================================================================
 # Project Navigation
 # ============================================================================
 
-alias donezo="z tasker && nvim ."
-alias tclient="z tasker && z client"
-alias tserver="z tasker && z backend"
+alias donezo="tmux-sessionizer ~/Projects/ReactNative/tasker"
+alias tclient="cd ~/Projects/ReactNative/tasker/client"
+alias tserver="cd ~/Projects/ReactNative/tasker/backend"
 
 # ============================================================================
 # General Aliases

@@ -5,6 +5,11 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- LazyVim defaults to fzf-lua + neo-tree for configs made before install_version 8;
+-- use snacks.picker as the one picker (and snacks for the explorer slot, which explorer.lua hands to mini.files)
+vim.g.lazyvim_picker = "snacks"
+vim.g.lazyvim_explorer = "snacks"
+
 -- ========================================
 -- WINDOW & SPLIT BEHAVIOR
 -- ========================================
@@ -33,9 +38,12 @@ vim.opt.wildoptions = "pum" -- Use popup menu for completion
 -- ========================================
 -- UI & VISUAL ELEMENTS
 -- ========================================
--- Window bar configuration (shows modification status and filename)
-vim.opt.spelllang = 'en_us'
-vim.opt.spell = true
+-- Spell checking: off in code, turned on for markdown/gitcommit by the FileType autocmd below
+vim.opt.spell = false
+vim.opt.spelllang = { "en_us" }
+vim.opt.spelloptions = "camel" -- Spell check camelCase words
+
+-- Window bar
 vim.opt.winbar = ""
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
@@ -79,10 +87,9 @@ vim.opt.writebackup = false -- Don't create backup before overwriting
 -- Persistent undo (much better than swap files)
 vim.opt.undofile = true -- Enable persistent undo
 vim.opt.undolevels = 10000 -- Maximum number of undos
-vim.opt.undoreload = 10000 -- Maximum lines to save for undo on buffer reload
 
 -- File handling
-vim.opt.autowrite = true -- Auto write when switching buffers
+vim.opt.autowrite = false -- Only save when asked (Ctrl+s or :w); switching buffers keeps unsaved changes
 vim.opt.autoread = true -- Auto read when file is changed outside vim
 vim.opt.confirm = true -- Confirm before closing unsaved files
 
@@ -128,10 +135,6 @@ vim.opt.pumheight = 10 -- Maximum height of popup menu
 vim.opt.updatetime = 250 -- Faster completion and diagnostics
 vim.opt.timeoutlen = 500 -- Time to wait for mapped sequence
 vim.opt.ttimeoutlen = 10 -- Time to wait for key code sequence
-
--- Redraw settings
-vim.opt.lazyredraw = false -- Don't skip redraws (false for better experience)
-vim.opt.ttyfast = true -- Assume fast terminal connection
 
 -- ========================================
 -- FILE PATTERNS & WILDCARDS
@@ -204,25 +207,16 @@ vim.opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpo
 -- Format options (control auto-formatting behavior)
 vim.opt.formatoptions:remove({ "c", "r", "o" }) -- Don't auto-comment on new lines
 
--- Clipboard integration (if you want system clipboard)
-if vim.fn.has("unnamedplus") == 1 then
-  vim.opt.clipboard = "unnamedplus" -- Use system clipboard
-end
+-- Clipboard: LazyVim already uses the system clipboard (unnamedplus) outside SSH
 
 -- Virtual edit (allow cursor beyond end of line in visual block mode)
 vim.opt.virtualedit = "block"
 
--- Fold settings
+-- Fold settings (LazyVim sets foldmethod/foldexpr to treesitter-based folding)
 vim.opt.foldenable = true -- Enable folding
 vim.opt.foldlevel = 99 -- Start with all folds open
 vim.opt.foldlevelstart = 99 -- Start with all folds open
 vim.opt.foldcolumn = "1" -- Show fold column
-vim.opt.foldmethod = "expr" -- Use expression for folding
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- Use treesitter for folding
-
--- Spell checking
-vim.opt.spelllang = { "en_us" } -- Spell check language
-vim.opt.spelloptions = "camel" -- Spell check camelCase words
 
 -- Title
 vim.opt.title = true -- Set window title
@@ -282,7 +276,7 @@ vim.diagnostic.config({
     focusable = false,
     style = "minimal",
     border = "rounded",
-    source = "always",
+    source = true,
     header = "",
     prefix = "",
   },
